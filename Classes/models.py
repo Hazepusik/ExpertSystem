@@ -6,9 +6,6 @@ from datetime import date, datetime
 class Situation(models.Model):
     name = models.CharField(max_length=100, default="")
     description = models.CharField(max_length=500, default="")
-    globalGroupId = models.IntegerField(blank=True, null=True)
-    properties = models.ManyToManyField(Recommendation, null=True, through="ProductPropertyValue")
-    variationOf = models.ForeignKey('Modification', null=True, blank=True)
 
 
 class Recommendation(models.Model):
