@@ -4,12 +4,12 @@ from datetime import date, datetime
 
 
 class Situation(models.Model):
-    name = models.CharField(max_length=100, default="")
+    name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
 
 
 class Recommendation(models.Model):
-    name = models.CharField(max_length=100, default="")
+    name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
 
 
