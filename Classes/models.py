@@ -7,6 +7,10 @@ class Situation(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
 
+    def addQuestion(self, question):
+        question.situation = self
+        question.save()
+
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
@@ -16,6 +20,10 @@ class Recommendation(models.Model):
 class Question(models.Model):
     name = models.CharField(max_length=500)
     situation = models.ForeignKey('Situation')
+
+    def addAnswer(self, answer):
+        answer.question = self
+        answer.save()
 
 
 class Answer(models.Model):
