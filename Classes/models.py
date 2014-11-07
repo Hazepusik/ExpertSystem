@@ -11,6 +11,11 @@ class Situation(models.Model):
         question.situation = self
         question.save()
 
+    def addQuestions(self, questions):
+        for question in questions:
+            self.addQuestion(question)
+
+    
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
@@ -24,6 +29,10 @@ class Question(models.Model):
     def addAnswer(self, answer):
         answer.question = self
         answer.save()
+
+    def addAnswers(self, answers):
+        for answer in answers:
+            self.addAnswer(answer)
 
 
 class Answer(models.Model):
