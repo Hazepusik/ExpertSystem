@@ -19,10 +19,15 @@ class Situation(models.Model):
         questions = Question.objects.filter(situation=self)
         return questions
 
+    def getAllRecommendations(self):
+        recommendation = Recommendation.objects.filter(situation=self)
+        return recommendation
+
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
+    situation = models.ForeignKey('Situation')
 
 
 class Question(models.Model):
