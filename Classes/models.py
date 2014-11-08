@@ -15,7 +15,10 @@ class Situation(models.Model):
         for question in questions:
             self.addQuestion(question)
 
-    
+    def getAllQuestions(self):
+        questions = Question.objects.filter(situation=self)
+        return questions
+
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
@@ -25,6 +28,10 @@ class Recommendation(models.Model):
 class Question(models.Model):
     name = models.CharField(max_length=500)
     situation = models.ForeignKey('Situation')
+
+    def getAllAnswers(self):
+        answers = Answer.objects.filter(question=self)
+        return answers
 
     def addAnswer(self, answer):
         answer.question = self
