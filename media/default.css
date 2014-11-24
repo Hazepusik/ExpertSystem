@@ -43,10 +43,10 @@ a:hover {
 /* Header */
 
 #header {
-	width: 600px;
-	height: 274px;
+	width: 550px;
+	height: 195px;
 	margin: 0px auto;
-	background: url(images/img2.jpg);
+	background: url(images/sexlogo.png);
 }
 
 #header h1 {
@@ -90,7 +90,7 @@ a:hover {
 #menu a {
 	display: block;
 	float: left;
-	width: 120px;
+	width: 300px;
 	padding: 7px 0px;
 	text-align: center;
 	text-decoration: none;
