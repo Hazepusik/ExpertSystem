@@ -23,6 +23,20 @@ class Situation(models.Model):
         recommendation = Recommendation.objects.filter(situation=self)
         return recommendation
 
+    def getRecommendation(self, answerIds):
+        answerIds = set(answerIds)
+        for rec in self.getAllRecommendations():
+            conditions = ConditionSet.filter(recommendation = rec)
+            for c in conditions:
+                cAnsIds = []
+                for condition in c.getAllConditions():
+                    cAnsIds.append(condition.answer.id)
+                cAnsIds = set(cAnsIds)
+                if cAnsIds.issubset(answerIds):
+                    return rec
+        return None
+
+
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
@@ -60,3 +74,6 @@ class Condition(models.Model):
 
 class ConditionSet(models.Model):
     conditionSet = models.ForeignKey('Recommendation')
+
+    def getAllConditions(self):
+        return Condition.objects.filter(conditionSet = self)
