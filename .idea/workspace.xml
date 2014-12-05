@@ -2,32 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84038f7c-785e-4409-b256-8c649a3fc3eb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/img1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/img2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/img3.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/sexlogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/sexlogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/images/spacer.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/default.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scenarios.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/default.css" afterPath="$PROJECT_DIR$/ExpertSystem/media/default.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/images/Thumbs.db" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/Thumbs.db" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/images/img1.jpg" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/img1.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/images/img2.jpg" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/img2.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/images/img3.gif" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/img3.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/images/spacer.gif" afterPath="$PROJECT_DIR$/ExpertSystem/media/images/spacer.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ExpertSystem.iml" afterPath="$PROJECT_DIR$/.idea/ExpertSystem.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.db" afterPath="$PROJECT_DIR$/local.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExpertSystem/settings.py" afterPath="$PROJECT_DIR$/ExpertSystem/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExpertSystem/urls.py" afterPath="$PROJECT_DIR$/ExpertSystem/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Classes/models.py" afterPath="$PROJECT_DIR$/Classes/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ExpertSystem.iws" />
@@ -81,12 +56,12 @@
       <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Classes/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="32" selection-start="0" selection-end="2296" vertical-scroll-proportion="0.7347973" vertical-offset="0" max-vertical-offset="1260">
+            <state line="50" column="27" selection-start="1750" selection-end="1750" vertical-scroll-proportion="0.9493243" vertical-offset="188" max-vertical-offset="1440">
               <folding>
                 <element signature="e#24#52#0" expanded="true" />
-                <marker date="1419023373284" expanded="true" signature="121:324" placeholder="..." />
-                <marker date="1419023373284" expanded="true" signature="1240:1347" placeholder="..." />
-                <marker date="1419023373284" expanded="true" signature="1426:1712" placeholder="..." />
+                <marker date="1416861842579" expanded="true" signature="121:324" placeholder="..." />
+                <marker date="1416861842579" expanded="true" signature="1787:1894" placeholder="..." />
+                <marker date="1416861842579" expanded="true" signature="1973:2259" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -459,9 +434,9 @@
         <state line="21" column="4" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1005">
           <folding>
             <element signature="e#24#52#0" expanded="true" />
-            <marker date="1419023373284" expanded="true" signature="121:324" placeholder="..." />
-            <marker date="1419023373284" expanded="true" signature="1240:1347" placeholder="..." />
-            <marker date="1419023373284" expanded="true" signature="1426:1712" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="121:324" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="1787:1894" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="1973:2259" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -494,12 +469,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Classes/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="32" selection-start="0" selection-end="2296" vertical-scroll-proportion="0.7347973" vertical-offset="0" max-vertical-offset="1260">
+        <state line="50" column="27" selection-start="1750" selection-end="1750" vertical-scroll-proportion="0.9493243" vertical-offset="188" max-vertical-offset="1440">
           <folding>
             <element signature="e#24#52#0" expanded="true" />
-            <marker date="1419023373284" expanded="true" signature="121:324" placeholder="..." />
-            <marker date="1419023373284" expanded="true" signature="1240:1347" placeholder="..." />
-            <marker date="1419023373284" expanded="true" signature="1426:1712" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="121:324" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="1787:1894" placeholder="..." />
+            <marker date="1416861842579" expanded="true" signature="1973:2259" placeholder="..." />
           </folding>
         </state>
       </provider>

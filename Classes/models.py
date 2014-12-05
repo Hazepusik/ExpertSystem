@@ -36,7 +36,19 @@ class Situation(models.Model):
                     return rec
         return None
 
-
+    def hasConflict(self, answerIds):
+        conflictWith = []
+        answerIds = set(answerIds)
+        for rec in self.getAllRecommendations():
+            conditions = ConditionSet.filter(recommendation = rec)
+            for c in conditions:
+                cAnsIds = []
+                for condition in c.getAllConditions():
+                    cAnsIds.append(condition.answer.id)
+                cAnsIds = set(cAnsIds)
+                if answerIds.issubset(cAnsIds):
+                    conflictWith.append(rec)
+        return conflictWith
 
 class Recommendation(models.Model):
     name = models.CharField(max_length=100)
