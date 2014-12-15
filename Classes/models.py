@@ -1,11 +1,22 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from datetime import date, datetime
+from django.template import loader, Context
+from django.http import HttpResponse
+from django.template import RequestContext
 
 
 class Situation(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
+
+    @staticmethod
+    def New(_name, _descr = ""):
+        s = Situation()
+        s.name = _name
+        s.description = _descr
+        s.save()
+        return s
 
     def addQuestion(self, question):
         question.situation = self
@@ -55,6 +66,13 @@ class Recommendation(models.Model):
     description = models.CharField(max_length=500, default="")
     situation = models.ForeignKey('Situation')
 
+    @staticmethod
+    def New(_name, _descr = ""):
+        s = Situation()
+        s.name = _name
+        s.description = _descr
+        s.save()
+        return s
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
@@ -89,3 +107,26 @@ class ConditionSet(models.Model):
 
     def getAllConditions(self):
         return Condition.objects.filter(conditionSet = self)
+
+
+def test(request):
+    temp = loader.get_template("test.html")
+    s = Situation.New('qqq', 'www')
+    r = Recommendation()
+    r.name = 'fuck yourself'
+    r.situation = s
+    r.save()
+    q = Question()
+    q.name = '?'
+    q.situation = s
+    q.save()
+    a = Answer()
+    a.name = 'loool'
+    a.question = q
+    a.save()
+    alt_a = Answer()
+    alt_a.name = 'foo bar'
+    alt_a.question = q
+    alt_a.save()
+    cont = RequestContext(request, {'data': s.name})
+    return  HttpResponse(temp.render(cont))

@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+PROJECT_ROOT = os.path.dirname(__file__)
 
 # Application definition
 
@@ -44,7 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -83,3 +84,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    #     'django.template.loaders.eggs.Loader',
+    )
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.dirname(__file__), #templates
+    '/home/hazepusik/ExpertSystem/'
+    )
