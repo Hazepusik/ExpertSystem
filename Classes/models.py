@@ -11,7 +11,7 @@ class Situation(models.Model):
     description = models.CharField(max_length=500, default="")
 
     @staticmethod
-    def New(_name, _descr = ""):
+    def new(_name, _descr = ""):
         s = Situation()
         s.name = _name
         s.description = _descr
@@ -67,16 +67,26 @@ class Recommendation(models.Model):
     situation = models.ForeignKey('Situation')
 
     @staticmethod
-    def New(_name, _descr = ""):
-        s = Situation()
-        s.name = _name
-        s.description = _descr
-        s.save()
-        return s
+    def new(_name, _sit, _descr = ""):
+        r = Recommendation()
+        r.name = _name
+        r.description = _descr
+        r.situation = _sit
+        r.save()
+        return r
+
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
     situation = models.ForeignKey('Situation')
+
+    @staticmethod
+    def new(_name, _sit):
+        q = Question()
+        q.name = _name
+        q.situation = _sit
+        q.save()
+        return q
 
     def getAllAnswers(self):
         answers = Answer.objects.filter(question=self)
@@ -95,15 +105,36 @@ class Answer(models.Model):
     name = models.CharField(max_length=500)
     question = models.ForeignKey('Question')
 
+    @staticmethod
+    def new(_name, _q):
+        a = Answer()
+        a.name = _name
+        a.question = _q
+        a.save()
+        return a
 
 class Condition(models.Model):
     answer = models.ForeignKey('Answer')
     conditionSet = models.ForeignKey('ConditionSet')
     isPositive = models.BooleanField(default=True)
 
+    @staticmethod
+    def new(_a, _cs, _ip=True):
+        c = Condition()
+        c.answer = _a
+        c.conditionSet = _cs
+        c.isPositive = _ip
+        c.save()
+        return c
 
 class ConditionSet(models.Model):
-    conditionSet = models.ForeignKey('Recommendation')
+    recommendation = models.ForeignKey('Recommendation')
+
+    @staticmethod
+    def new(_r):
+        cs = ConditionSet()
+        cs.recommendation = _r
+        return cs
 
     def getAllConditions(self):
         return Condition.objects.filter(conditionSet = self)
@@ -111,7 +142,7 @@ class ConditionSet(models.Model):
 
 def test(request):
     temp = loader.get_template("test.html")
-    s = Situation.New('qqq', 'www')
+    s = Situation.new('qqq', 'www')
     r = Recommendation()
     r.name = 'fuck yourself'
     r.situation = s
