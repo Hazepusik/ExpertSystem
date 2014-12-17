@@ -134,6 +134,7 @@ class ConditionSet(models.Model):
     def new(_r):
         cs = ConditionSet()
         cs.recommendation = _r
+        cs.save()
         return cs
 
     def getAllConditions(self):
@@ -143,21 +144,24 @@ class ConditionSet(models.Model):
 def test(request):
     temp = loader.get_template("test.html")
     s = Situation.new('qqq', 'www')
-    r = Recommendation()
-    r.name = 'fuck yourself'
-    r.situation = s
-    r.save()
-    q = Question()
-    q.name = '?'
-    q.situation = s
-    q.save()
-    a = Answer()
-    a.name = 'loool'
-    a.question = q
-    a.save()
-    alt_a = Answer()
-    alt_a.name = 'foo bar'
-    alt_a.question = q
-    alt_a.save()
-    cont = RequestContext(request, {'data': s.name})
+    r1 = Recommendation.new('rec a1_1, a2_2', s)
+    r2 = Recommendation.new('rec a1_2, a2_1', s)
+    q1 = Question.new('q2?', s)
+    a1_1 = Answer.new('a1_1', q1)
+    a1_2 = Answer.new('a1_2', q1)
+
+    q2 = Question.new('q1?', s)
+    a2_1 = Answer.new('a2_1', q2)
+    a2_2 = Answer.new('a2_2', q2)
+
+    cs1 = ConditionSet().new(r1)
+    c1_1 = Condition().new(a1_1, cs1)
+    c2_2 = Condition().new(a2_2, cs1)
+
+    cs2 = ConditionSet().new(r2)
+    c2_1 = Condition().new(a2_1, cs2)
+    c2_1 = Condition().new(a2_1, cs2)
+
+
+    cont = RequestContext(request, {'data': cs1.getAllConditions()})
     return  HttpResponse(temp.render(cont))
