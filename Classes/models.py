@@ -37,7 +37,7 @@ class Situation(models.Model):
     def getRecommendation(self, answerIds):
         answerIds = set(answerIds)
         for rec in self.getAllRecommendations():
-            conditions = ConditionSet.filter(recommendation = rec)
+            conditions = ConditionSet.objects.filter(recommendation = rec)
             for c in conditions:
                 cAnsIds = []
                 for condition in c.getAllConditions():
@@ -51,7 +51,7 @@ class Situation(models.Model):
         conflictWith = []
         answerIds = set(answerIds)
         for rec in self.getAllRecommendations():
-            conditions = ConditionSet.filter(recommendation = rec)
+            conditions = ConditionSet.objects.filter(recommendation = rec)
             for c in conditions:
                 cAnsIds = []
                 for condition in c.getAllConditions():
@@ -146,6 +146,7 @@ def test(request):
     s = Situation.new('qqq', 'www')
     r1 = Recommendation.new('rec a1_1, a2_2', s)
     r2 = Recommendation.new('rec a1_2, a2_1', s)
+    r3 = Recommendation.new('rec a1_1', s)
     q1 = Question.new('q2?', s)
     a1_1 = Answer.new('a1_1', q1)
     a1_2 = Answer.new('a1_2', q1)
@@ -154,14 +155,19 @@ def test(request):
     a2_1 = Answer.new('a2_1', q2)
     a2_2 = Answer.new('a2_2', q2)
 
+    q3 = Question.new('q3?', s)
+
     cs1 = ConditionSet().new(r1)
     c1_1 = Condition().new(a1_1, cs1)
     c2_2 = Condition().new(a2_2, cs1)
 
     cs2 = ConditionSet().new(r2)
     c2_1 = Condition().new(a2_1, cs2)
-    c2_1 = Condition().new(a2_1, cs2)
+    c2_1 = Condition().new(a1_2, cs2)
+
+    cs3 = ConditionSet().new(r3)
+    c3_1 = Condition().new(a1_1, cs3)
 
 
-    cont = RequestContext(request, {'data': cs1.getAllConditions()})
+    cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
     return  HttpResponse(temp.render(cont))

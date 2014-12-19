@@ -69,7 +69,7 @@
       <file leaf-file-name="test.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="12" selection-start="127" selection-end="127" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
+            <state line="10" column="12" selection-start="129" selection-end="129" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
               <folding />
             </state>
           </provider>
@@ -78,12 +78,12 @@
       <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Classes/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="136" column="17" selection-start="3836" selection-end="3836" vertical-scroll-proportion="0.9493243" vertical-offset="1478" max-vertical-offset="2580">
+            <state line="171" column="63" selection-start="4798" selection-end="4798" vertical-scroll-proportion="0.9239865" vertical-offset="2018" max-vertical-offset="2670">
               <folding>
                 <element signature="e#24#52#0" expanded="true" />
-                <marker date="1418840923463" expanded="true" signature="245:612" placeholder="..." />
-                <marker date="1418840923463" expanded="true" signature="2075:2182" placeholder="..." />
-                <marker date="1418840923463" expanded="true" signature="2463:2901" placeholder="..." />
+                <marker date="1418841774123" expanded="true" signature="245:612" placeholder="..." />
+                <marker date="1418841774123" expanded="true" signature="2091:2198" placeholder="..." />
+                <marker date="1418841774123" expanded="true" signature="2479:2917" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -500,9 +500,9 @@
         <state line="21" column="4" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1005">
           <folding>
             <element signature="e#24#52#0" expanded="true" />
-            <marker date="1418840923463" expanded="true" signature="245:612" placeholder="..." />
-            <marker date="1418840923463" expanded="true" signature="2075:2182" placeholder="..." />
-            <marker date="1418840923463" expanded="true" signature="2463:2901" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="245:612" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="2091:2198" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="2479:2917" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -558,19 +558,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="12" selection-start="127" selection-end="127" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
+        <state line="10" column="12" selection-start="129" selection-end="129" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Classes/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="17" selection-start="3836" selection-end="3836" vertical-scroll-proportion="0.9493243" vertical-offset="1478" max-vertical-offset="2580">
+        <state line="171" column="63" selection-start="4798" selection-end="4798" vertical-scroll-proportion="0.9239865" vertical-offset="2018" max-vertical-offset="2670">
           <folding>
             <element signature="e#24#52#0" expanded="true" />
-            <marker date="1418840923463" expanded="true" signature="245:612" placeholder="..." />
-            <marker date="1418840923463" expanded="true" signature="2075:2182" placeholder="..." />
-            <marker date="1418840923463" expanded="true" signature="2463:2901" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="245:612" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="2091:2198" placeholder="..." />
+            <marker date="1418841774123" expanded="true" signature="2479:2917" placeholder="..." />
           </folding>
         </state>
       </provider>
