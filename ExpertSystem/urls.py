@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 import settings
 from Classes.models import test
-from Classes.views import main, situations
+from Classes.views import main, situations, questions
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^test/$',  test),
     url(r'^$',  main),
     url(r'^scenarios/$',  situations),
+    url(r'^scenarios/([0-9]+)/$',  questions),
     url(r'^admin/', include(admin.site.urls)),
 )
 urlpatterns += patterns('',

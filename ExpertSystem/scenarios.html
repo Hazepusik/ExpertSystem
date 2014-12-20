@@ -30,7 +30,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 	<div id="colOne">
 		<h2>Сценариев у нас пруд-пруди</h2>
 {% for item in scenarios %}		
-<h3>{{item.name}}</h3>
+<a href="/scenarios/{{item.id}}/"><h3>{{item.name}}</h3></a>
 		<p>{{item.description}}</p>
 {% endfor %}
 		</div>
