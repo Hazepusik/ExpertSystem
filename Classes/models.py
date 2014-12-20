@@ -11,7 +11,7 @@ class Situation(models.Model):
     description = models.CharField(max_length=500, default="")
 
     @staticmethod
-    def new(_name, _descr = ""):
+    def new(_name, _descr=""):
         s = Situation()
         s.name = _name
         s.description = _descr
@@ -67,7 +67,7 @@ class Recommendation(models.Model):
     situation = models.ForeignKey('Situation')
 
     @staticmethod
-    def new(_name, _sit, _descr = ""):
+    def new(_name, _sit, _descr=""):
         r = Recommendation()
         r.name = _name
         r.description = _descr
@@ -143,30 +143,67 @@ class ConditionSet(models.Model):
 
 def test(request):
     temp = loader.get_template("test.html")
-    s = Situation.new('qqq', 'www')
-    r1 = Recommendation.new('rec a1_1, a2_2', s)
-    r2 = Recommendation.new('rec a1_2, a2_1', s)
-    r3 = Recommendation.new('rec a1_1', s)
-    q1 = Question.new('q2?', s)
-    a1_1 = Answer.new('a1_1', q1)
-    a1_2 = Answer.new('a1_2', q1)
+    s = Situation.new('Что надеть', 'Помощь в подборе одежды по погоде')
+    r1 = Recommendation.new('Шорты и футболку', s)
+    r2 = Recommendation.new('Теплые штаны и зимнюю куртку', s)
+    r3 = Recommendation.new('Джинсы и свитер.', s)
+    r4 = Recommendation.new('Штаны и пальто. Не забудьте зонт', s)
+    q1 = Question.new('Какое сейчас время года?', s)
+    a1_1 = Answer.new('Лето', q1)
+    a1_2 = Answer.new('Зима', q1)
+    a1_3 = Answer.new('Осень', q1)
+    a1_4 = Answer.new('Весна', q1)
 
-    q2 = Question.new('q1?', s)
-    a2_1 = Answer.new('a2_1', q2)
-    a2_2 = Answer.new('a2_2', q2)
+    q2 = Question.new('Температура ниже нуля?', s)
+    a2_1 = Answer.new('Да', q2)
+    a2_2 = Answer.new('Нет', q2)
 
-    q3 = Question.new('q3?', s)
+
+    q3 = Question.new('Сейчас идет дождь?', s)
+    a3_1 = Answer.new('Да', q3)
+    a3_2 = Answer.new('Нет', q3)
+
 
     cs1 = ConditionSet().new(r1)
     c1_1 = Condition().new(a1_1, cs1)
-    c2_2 = Condition().new(a2_2, cs1)
+    c2_2 = Condition().new(a3_2, cs1)
+
 
     cs2 = ConditionSet().new(r2)
     c2_1 = Condition().new(a2_1, cs2)
     c2_1 = Condition().new(a1_2, cs2)
 
+
     cs3 = ConditionSet().new(r3)
-    c3_1 = Condition().new(a1_1, cs3)
+    c3_1 = Condition().new(a1_3, cs3)
+    c3_2 = Condition().new(a2_2, cs3)
+    c3_3 = Condition().new(a3_2, cs3)
+
+    cs3 = ConditionSet().new(r3)
+    c3_1 = Condition().new(a1_4, cs3)
+    c3_2 = Condition().new(a2_2, cs3)
+    c3_3 = Condition().new(a3_2, cs3)
+
+    cs3 = ConditionSet().new(r3)
+    c3_1 = Condition().new(a1_2, cs3)
+    c3_2 = Condition().new(a2_2, cs3)
+    c3_3 = Condition().new(a3_2, cs3)
+
+
+    cs4 = ConditionSet().new(r4)
+    c4_1 = Condition().new(a1_2, cs4)
+    c4_2 = Condition().new(a2_2, cs4)
+    c4_3 = Condition().new(a3_2, cs4)
+
+    cs4 = ConditionSet().new(r4)
+    c4_1 = Condition().new(a1_3, cs4)
+    c4_2 = Condition().new(a2_2, cs4)
+    c4_3 = Condition().new(a3_2, cs4)
+
+    cs4 = ConditionSet().new(r4)
+    c4_1 = Condition().new(a1_4, cs4)
+    c4_2 = Condition().new(a2_2, cs4)
+    c4_3 = Condition().new(a3_2, cs4)
 
 
     cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
