@@ -10,7 +10,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 <title>Endless by Free Css Templates</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="default.css" rel="stylesheet" type="text/css" />
+<link href="/media/default.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="header">
@@ -28,14 +28,11 @@ Released for free under a Creative Commons Attribution 2.5 License
 </div>
 <div id="content">
 	<div id="colOne">
-		<h2>Кто такие эксперты то, ваще? </h2>
-		<p>Экспе́рт (от лат. expertus — опытный) — специалист, приглашаемый или нанимаемый за вознаграждение для выдачи квалифицированного заключения или суждения по вопросу, рассматриваемому или решаемому другими людьми, менее компетентными в этой области.</p>
-
-<p>Эксперты привлекаются для оценок, установления состояния объектов в целях определения их состояния для принятия ответственных решений (суды, управление предприятиями и проектами, оценка исторических объектов и артефактов, перепроверка заявляемых открытий и изобретений, и др.)</p>
-
-<p>В ряду профессионального уровня занимает высокий статус в последовательности: Ученик > Стажёр > Специалист > Мастер > Рационализатор > Эксперт > Творец[источник не указан 122 дня].</p>
-
-<p>Эксперт различает работы специалистов, мастеров и даже творцов. А вот творить как творцы они не обязаны.</p>
+		<h2>Сценариев у нас пруд-пруди</h2>
+{% for item in scenarios %}		
+<h3>{{item.name}}</h3>
+		<p>{{item.description}}</p>
+{% endfor %}
 		</div>
 	<div id="colTwo">
 		<h2>ЧаВо</h2>
