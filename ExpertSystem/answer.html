@@ -28,20 +28,8 @@ Released for free under a Creative Commons Attribution 2.5 License
 </div>
 <div id="content">
 	<div id="colOne">
-		<h2>Вопросов тоже немало</h2>
-        <form action="/solution/" method="post">
-            {% csrf_token %}
-            <input type="hidden" name ="sit" value="{{scenario}}">
-{% for item in questions %}
-		<p>{{item.quest.name}}</p>
-        <select name="q{{item.quest.id}}">
-            {% for answer in item.ans %}
-            <option value="{{answer.id}}">{{answer.name}}</option>
-            {% endfor %}
-        </select>
-{% endfor %}
-        <input type="submit" value="Принять совет">
-        </form>
+		<h2>Прислушайтесь к совету экспертов</h2>
+		<p>В данной ситуации по мнению наших экспертов лучше всего подойдет {{data.name}}</p>
 		</div>
 	<div id="colTwo">
 		<h2>ЧаВо</h2>
