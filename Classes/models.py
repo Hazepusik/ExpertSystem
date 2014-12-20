@@ -11,7 +11,7 @@ class Situation(models.Model):
     description = models.CharField(max_length=500, default="")
 
     @staticmethod
-    def new(_name, _descr = ""):
+    def new(_name, _descr=""):
         s = Situation()
         s.name = _name
         s.description = _descr
@@ -67,7 +67,7 @@ class Recommendation(models.Model):
     situation = models.ForeignKey('Situation')
 
     @staticmethod
-    def new(_name, _sit, _descr = ""):
+    def new(_name, _sit, _descr=""):
         r = Recommendation()
         r.name = _name
         r.description = _descr
