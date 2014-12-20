@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84038f7c-785e-4409-b256-8c649a3fc3eb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.db" afterPath="$PROJECT_DIR$/local.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Classes/models.py" afterPath="$PROJECT_DIR$/Classes/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ExpertSystem.iws" />
@@ -402,7 +400,11 @@
       <created>1419066255499</created>
       <updated>1419066255499</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="удаление локальных файлов IDE">
+      <created>1419068867582</created>
+      <updated>1419068867582</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
