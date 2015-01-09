@@ -75,6 +75,21 @@ class Recommendation(models.Model):
         r.save()
         return r
 
+    def getAnswers(self):
+        conditions = ConditionSet.objects.filter(recommendation = self)
+        for c in conditions:
+            cAns = []
+            for condition in c.getAllConditions():
+                cAns.append(condition.answer)
+            cAns = set(cAns)
+        return list(cAns)
+
+    def hasConflict(self):
+        list(map(lambda x: x.id, self.getAnswers()))
+        conflicted = self.situation.hasConflict(list(map(lambda x: x.id, self.getAnswers())))
+        conflicted.remove(self)
+        return conflicted
+
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
@@ -205,6 +220,18 @@ def test(request):
     c4_2 = Condition().new(a2_2, cs4)
     c4_3 = Condition().new(a3_2, cs4)
 
+    rCONFLICT = Recommendation.new('Шорты и футболку', s)
 
-    cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
+    cs1 = ConditionSet().new(rCONFLICT)
+    c1_1 = Condition().new(a1_1, cs1)
+    c2_2 = Condition().new(a3_2, cs1)
+
+    rCONFLICT = Recommendation.new('Шорты и футболку', s)
+
+    cs1 = ConditionSet().new(rCONFLICT)
+    c1_1 = Condition().new(a1_1, cs1)
+    c2_2 = Condition().new(a3_2, cs1)
+    c2_2 = Condition().new(a2_2, cs1)
+
+    cont = RequestContext(request, {'data': r1.hasConflict()})
     return  HttpResponse(temp.render(cont))
