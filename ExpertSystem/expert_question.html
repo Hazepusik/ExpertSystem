@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+		<h2>{{question.name}}</h2>
+{% for item in answers %}
+<a href="/expert/answers/{{item.id}}/delete" >delete</a> <input type="text" name="answer-{{item.id}}" value="{{item.name}}" onchange="Dajaxice.Classes.redact_answer(dumb_callback, {'id':'{{item.id}}', 'value': this.value});"></br>
+{% endfor %}
+{% endblock %}

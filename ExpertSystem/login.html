@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+<form action="/expert_logindata/" method="post"><center>
+	{% csrf_token %}
+	Вход для экспертов.<br> Внимание, пароль чувствителен к регистру!<br>
+	<input name="login" type="text" placeholder="login" required><br>
+	<input name="passw" type="password" placeholder="password" required><br>
+	<input type="submit" value="login">
+	</center>
+</form>
+{% endblock %}

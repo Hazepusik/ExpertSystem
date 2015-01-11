@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+		<h2>Ответте на следующие вопросы:</h2>
+        <form action="/questions/{{scenario}}/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name ="answers" value="{{answers}}">
+		<p>{{quest.name}}</p>
+        <select name="question" required>
+            {% for answer in ans %}
+            <option value="{{answer.id}}">{{answer.name}}</option>
+            {% endfor %}
+        </select> <br>
+        <input type="submit" value="отправить">
+        </form>
+{% endblock %}

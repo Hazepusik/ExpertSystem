@@ -1,34 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!--
-Design by Free CSS Templates
-http://www.freecsstemplates.org
-Released for free under a Creative Commons Attribution 2.5 License
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Endless by Free Css Templates</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link href="/media/default.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div id="header">
-	<h1><a href="#"></a></h1>
-	<h2><a href="http://www.freecsstemplates.org/"></a></h2>
-</div>
-<div id="menu">
-	<ul>
-		<li><a href="/scenarios/" accesskey="1" title="">Выбрать пользовательский сценарий</a></li>
-		<li><a href="/admin/" accesskey="2" title="">Вход для экспертов</a></li>
-		<!--<li><a href="#" accesskey="3" title="">Products</a></li>-->
-		<!--<li><a href="#" accesskey="4" title="">Services</a></li>-->
-		<!--<li><a href="#" accesskey="5" title="">Contact Us</a></li>-->
-	</ul>
-</div>
-<div id="content">
-	<div id="colOne">
-		<h2>Кто такие эксперты то, ваще? </h2>
+{% extends 'base.html' %}
+
+{% block main_content %}
+<h2>Кто такие эксперты то, ваще? </h2>
 		<p>Экспе́рт (от лат. expertus — опытный) — специалист, приглашаемый или нанимаемый за вознаграждение для выдачи квалифицированного заключения или суждения по вопросу, рассматриваемому или решаемому другими людьми, менее компетентными в этой области.</p>
 
 <p>Эксперты привлекаются для оценок, установления состояния объектов в целях определения их состояния для принятия ответственных решений (суды, управление предприятиями и проектами, оценка исторических объектов и артефактов, перепроверка заявляемых открытий и изобретений, и др.)</p>
@@ -36,25 +9,4 @@ Released for free under a Creative Commons Attribution 2.5 License
 <p>В ряду профессионального уровня занимает высокий статус в последовательности: Ученик > Стажёр > Специалист > Мастер > Рационализатор > Эксперт > Творец[источник не указан 122 дня].</p>
 
 <p>Эксперт различает работы специалистов, мастеров и даже творцов. А вот творить как творцы они не обязаны.</p>
-		</div>
-	<div id="colTwo">
-		<h2>ЧаВо</h2>
-		<h3>Чопочом?</h3>
-		<p>А ты чо, обострить решил? Ты не обостряй!</p>
-		<h3>Сколько у вас стоит самая дешевая водка?</h3>
-		<p>У нас что, вечер вопросов и ответов?</p>
-		<h3>А прейскурантик?</h3>
-		<p>Поистрепался!</p>
-        <h3>А если?</h3>
-		<p>Нет!</p>
-        <h3>А может быть?</h3>
-		<p>А вот это попробуйте!</p>
-
-	</div>
-	<div style="clear: both;">&nbsp;</div>
-</div>
-<div id="footer">
-	<p>Copyright &copy; 2006 Endless. Designed by <a href="http://www.freecsstemplates.org"><strong>Free CSS Templates</strong></a></p>
-</div>
-</body>
-</html>
+{% endblock %}

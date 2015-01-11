@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+		<h2>Рекомендации данного сценария:</h2>
+{% for item in recommendations %}
+<a href="/expert/recommendations/{{item.id}}/"><h3>{{item.name}}</h3></a>
+		<p>{{item.description}}</p>
+{% endfor %}
+Добавить новую рекомендацию:
+		<h2>Вопросы данного сценария:</h2>
+{% for item in questions %}
+<a href="/expert/questions/{{item.id}}/"><h3>{{item.name}}</h3></a>
+{% endfor %}
+{% endblock %}
