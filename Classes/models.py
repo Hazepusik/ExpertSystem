@@ -75,6 +75,21 @@ class Recommendation(models.Model):
         r.save()
         return r
 
+    def getAnswers(self):
+        conditions = ConditionSet.objects.filter(recommendation = self)
+        for c in conditions:
+            cAns = []
+            for condition in c.getAllConditions():
+                cAns.append(condition.answer)
+            cAns = set(cAns)
+        return list(cAns)
+
+    def hasConflict(self):
+        list(map(lambda x: x.id, self.getAnswers()))
+        conflicted = self.situation.hasConflict(list(map(lambda x: x.id, self.getAnswers())))
+        conflicted.remove(self)
+        return conflicted
+
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
