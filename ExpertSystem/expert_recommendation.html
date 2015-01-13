@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+Текущая рекоммендация: {{recommendation.name}}
+<div id="conflict">
+{{conflict_block}}
+</div>
+		<h2>Список вопросов:</h2>
+{% for item in questions %}
+{{item.name}}<br><select name="{{item.id}}" onchange="Dajaxice.Classes.redact_condition(answer_callback, {'recommendation_id':'{{recommendation.id}}', 'answer_id': this.value, 'question_id': '{{item.id}}'});">
+    <option value="-1">---</option>
+    {% for option in item.answer_set.all %}
+    <option value="{{option.id}}" {% if option in answers %}selected{% endif %}>{{option.name}}</option>
+    {% endfor %}
+</select><hr>
+{% endfor %}
+Добавить новый вопрос:
+<form action="/expert/new_question/" method="post">
+    {% csrf_token %}
+    <input name="name" type="text" placeholder="название" required><br>
+	<input type="hidden" name="situation" value="{{situation}}"><br>
+    <input type="submit" value="создать">
+</form>
+
+
+{% endblock %}

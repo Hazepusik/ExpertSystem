@@ -77,8 +77,8 @@ class Recommendation(models.Model):
 
     def getAnswers(self):
         conditions = ConditionSet.objects.filter(recommendation = self)
+        cAns = []
         for c in conditions:
-            cAns = []
             for condition in c.getAllConditions():
                 cAns.append(condition.answer)
             cAns = set(cAns)
@@ -87,8 +87,12 @@ class Recommendation(models.Model):
     def hasConflict(self):
         list(map(lambda x: x.id, self.getAnswers()))
         conflicted = self.situation.hasConflict(list(map(lambda x: x.id, self.getAnswers())))
-        conflicted.remove(self)
+        if self in conflicted:
+            conflicted.remove(self)
         return conflicted
+
+    def addAnswer(self, answer):
+        return None
 
 
 class Question(models.Model):

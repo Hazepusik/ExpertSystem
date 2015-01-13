@@ -1,4 +1,4 @@
-from Classes.models import Situation, Question, Answer
+from Classes.models import Situation, Question, Answer, Recommendation
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -92,8 +92,12 @@ def expert_situations(request):
 
 def add_situation(request):
     if request.user.is_authenticated():
-        new_situation = Situation.new(request.POST['name'], request.POST['description'])
-        return  redirect('/expert/situations/'+str(new_situation.id)+'/')
+        if 'description' in request.POST.keys():
+            description = request.POST['description']
+        else:
+            description = ''
+        new_situation = Situation.new(request.POST['name'], description)
+        return redirect('/expert/situations/'+str(new_situation.id)+'/')
     else:
         return redirect('/expert/')
 
@@ -102,7 +106,7 @@ def redact_situation(request, id):
         current_situation = Situation.objects.get(id=id)
         recommendations = current_situation.getAllRecommendations()
         questions = current_situation.getAllQuestions()
-        c = {'recommendations': recommendations, 'questions': questions}
+        c = {'recommendations': recommendations, 'questions': questions, 'situation': id}
         c.update(csrf(request))
         return render_to_response("expert_situation.html", c)
     else:
@@ -118,5 +122,69 @@ def redact_question(request, id):
     else:
         return redirect('/expert/')
 
+def delete_answer(request, id):
+    if request.user.is_authenticated():
+        current_answer = Answer.objects.get(id=int(id))
+        current_question = current_answer.question
+        current_answer.delete()
+        return redirect('/expert/questions/'+str(current_question.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def delete_question(request, id):
+    if request.user.is_authenticated():
+        current_question = Question.objects.get(id=int(id))
+        current_situation = current_question.situation
+        current_question.delete()
+        return redirect('/expert/situations/'+str(current_situation.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def add_answer(request):
+    if request.user.is_authenticated():
+        new_answer = Answer.new(request.POST['name'], Question.objects.get(id=int(request.POST['question'])))
+        new_answer.save()
+        return redirect('/expert/questions/'+str(request.POST['question'])+'/')
+    else:
+        return redirect('/expert/')
 
 
+def add_question(request):
+    if request.user.is_authenticated():
+        new_question = Question.new(request.POST['name'],Situation.objects.get(id=int(request.POST['situation'])))
+        return redirect('/expert/questions/'+str(new_question.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def add_recommendation(request):
+    if request.user.is_authenticated():
+        if 'description' in request.POST.keys():
+            description = request.POST['description']
+        else:
+            description = ''
+        new_question = Recommendation.new(request.POST['name'],Situation.objects.get(id=int(request.POST['situation'])),description)
+        return redirect('/expert/recommendations/'+str(new_question.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def redact_recommendation(request, id):
+    if request.user.is_authenticated():
+        current_recommendation = Recommendation.objects.get(id=int(id))
+        current_situation = current_recommendation.situation
+        current_questions = current_situation.getAllQuestions()
+        current_conflicts = current_recommendation.hasConflict()
+        answers = current_recommendation.getAnswers()
+        if current_conflicts:
+            conflict_block = loader.render_to_string('conflict_block.html', {'conflicts': current_conflicts})
+        else:
+            conflict_block=''
+        c = {'recommendation': current_recommendation,
+             'questions': current_questions,
+             'conflicts': current_conflicts,
+             'answers': answers,
+             'situation': current_situation.id,
+             'conflict_block': conflict_block}
+        c.update(csrf(request))
+        return render_to_response("expert_recommendation.html", c)
+    else:
+        return redirect('/expert/')

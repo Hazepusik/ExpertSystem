@@ -5,4 +5,11 @@
 {% for item in answers %}
 <a href="/expert/answers/{{item.id}}/delete" >delete</a> <input type="text" name="answer-{{item.id}}" value="{{item.name}}" onchange="Dajaxice.Classes.redact_answer(dumb_callback, {'id':'{{item.id}}', 'value': this.value});"></br>
 {% endfor %}
+Добавить ответ:
+<form action="/expert/answers/add/" method="post">
+    {% csrf_token %}
+    <input name="name" type="text" placeholder="название" required><br>
+	<input type="hidden" name="question" value="{{question.id}}"><br>
+    <input type="submit" value="создать">
+</form>
 {% endblock %}

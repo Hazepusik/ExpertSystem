@@ -1,0 +1,3 @@
+Конфликтует со следующими рекоммендациями: <br>
+{% for conflict in conflicts %}
+<a href="/expert/recommendations/{{conflict.id}}">{{conflict.name}}</a>{% endfor %}

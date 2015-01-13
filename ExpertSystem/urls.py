@@ -2,7 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 import settings
 from Classes.models import test
-from Classes.views import main, situations, questions, expert_entrance, expert_auth, expert_situations, add_situation, redact_situation, redact_question, next_question
+from Classes.views import *
+
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -21,8 +22,15 @@ urlpatterns = patterns('',
     url(r'^expert_logindata/$', expert_auth),
     url(r'^expert/situations/$', expert_situations),
     url(r'^expert/new_scenario/$', add_situation),
+    url(r'^expert/new_question/$', add_question),
+    url(r'^expert/new_recommendation/$', add_recommendation),
     url(r'^expert/situations/([0-9]+)/$', redact_situation),
+    url(r'^expert/answers/([0-9]+)/delete/$', delete_answer),
+    url(r'^expert/answers/add/$', add_answer),
+    url(r'^expert/questions/([0-9]+)/delete/$', delete_question),
     url(r'^expert/questions/([0-9]+)/$', redact_question),
+    url(r'^expert/recommendations/([0-9]+)/$', redact_recommendation),
+
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 )
