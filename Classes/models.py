@@ -91,11 +91,11 @@ class Recommendation(models.Model):
         return conflicted
 
     def removeQuestion(self, question):
-        conditionSets = ConditionSet.objects.filter(recommendation = self)
         answersOfQuestion = Answer.objects.filter(question = question)
         conditionsByQuestion = []
         for answer in answersOfQuestion:
             conditionsByQuestion += Condition.objects.filter(answer = answer)
+        conditionSets = ConditionSet.objects.filter(recommendation = self)
         conditionsByConditionSets = []
         for cs in conditionSets:
             conditionsByConditionSets += Condition.objects.filter(conditionSet = cs)
@@ -103,7 +103,11 @@ class Recommendation(models.Model):
         for cndToRm in conditionsToRemove:
             cndToRm.delete()
 
-
+    def addAnswer(self, answer):
+        self.removeQuestion(answer.question)
+        conditionSets = ConditionSet.objects.filter(recommendation = self)
+        for cs in conditionSets:
+            newCnd = Condition().new(answer, cs)
 
 
 class Question(models.Model):
@@ -246,7 +250,8 @@ def test(request):
     a2_2 = Answer.new('Менее 300K$', q2)
 
     cs1 = ConditionSet().new(r1)
-    c1_1 = Condition().new(a1_1, cs1)
+    r1.addAnswer(a1_1)
+    #c1_1 = Condition().new(a1_1, cs1)
 
     cs2 = ConditionSet().new(r2)
     c2_1 = Condition().new(a1_2, cs2)
@@ -257,7 +262,7 @@ def test(request):
     c3_1 = Condition().new(a1_2, cs3)
     c3_2 = Condition().new(a2_2, cs3)
 
-    r1.removeQuestion(q1)
+    #r1.removeQuestion(q1)
 
     cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
     return  HttpResponse(temp.render(cont))
