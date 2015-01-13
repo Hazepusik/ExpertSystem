@@ -90,6 +90,21 @@ class Recommendation(models.Model):
         conflicted.remove(self)
         return conflicted
 
+    def removeQuestion(self, question):
+        conditionSets = ConditionSet.objects.filter(recommendation = self)
+        answersOfQuestion = Answer.objects.filter(question = question)
+        conditionsByQuestion = []
+        for answer in answersOfQuestion:
+            conditionsByQuestion += Condition.objects.filter(answer = answer)
+        conditionsByConditionSets = []
+        for cs in conditionSets:
+            conditionsByConditionSets += Condition.objects.filter(conditionSet = cs)
+        conditionsToRemove = list( set(conditionsByConditionSets) & set(conditionsByQuestion) )
+        for cndToRm in conditionsToRemove:
+            cndToRm.delete()
+
+
+
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
@@ -241,6 +256,8 @@ def test(request):
     cs3 = ConditionSet().new(r3)
     c3_1 = Condition().new(a1_2, cs3)
     c3_2 = Condition().new(a2_2, cs3)
+
+    r1.removeQuestion(q1)
 
     cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
     return  HttpResponse(temp.render(cont))
