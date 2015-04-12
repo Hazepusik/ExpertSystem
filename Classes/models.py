@@ -5,18 +5,61 @@ from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
 
+class SituationType(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=500, default="")
+    is_subtype_of = models.ForeignKey('SituationType', blank=True, null=True)
+
+    @staticmethod
+    def new(_name, _parent=None, _descr=""):
+        st = SituationType()
+        st.name = _name
+        st.description = _descr
+        st.is_subtype_of = _parent
+        st.save()
+        return st
+
+    def changeParent(self, _parent):
+        self.is_subtype_of = _parent
+        self.save()
+        return self
+
+    def addChildSituation(self, situation):
+        situation.situation_type = self
+        situation.save()
+        return self
+
+    def addChildSituationType(self, st):
+        st.is_subtype_of = self
+        st.save()
+        return self
+
+    def remove(self):
+        if (len(Situation.objects.filter(situation_type=self)) > 0):
+            return False
+        if (len(SituationType.objects.filter(is_subtype_of=self)) > 0):
+            return False
+        self.delete()
+        return True
 
 class Situation(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
+    situation_type = models.ForeignKey('SituationType', blank=True, null=True)
 
     @staticmethod
-    def new(_name, _descr=""):
+    def new(_name, _st=None, _descr=""):
         s = Situation()
         s.name = _name
+        s.situation_type = _st
         s.description = _descr
         s.save()
         return s
+
+    def setSituationType(self, st):
+        self.situation_type = st
+        self.save()
+        return self
 
     def addQuestion(self, question):
         question.situation = self
@@ -265,5 +308,14 @@ def test(request):
 
     #r1.removeQuestion(q1)
 
-    cont = RequestContext(request, {'data': s.hasConflict([a1_1.id])})
-    return  HttpResponse(temp.render(cont))
+    stMain = SituationType().new("Main")
+    st1 = SituationType().new("st1", stMain)
+    st2 = SituationType().new("st2", st1)
+    st2.changeParent(stMain)
+    st2.addChildSituationType(st1)
+    st2.addChildSituation(s)
+    stRM = SituationType().new("RM", st1)
+    s.setSituationType(stMain)
+
+    cont = RequestContext(request, {'data': s.situation_type.name})
+    return HttpResponse(temp.render(cont))
