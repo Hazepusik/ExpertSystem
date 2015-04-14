@@ -4,6 +4,7 @@ from datetime import date, datetime
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
+import json
 
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
@@ -48,7 +49,7 @@ class Situation(models.Model):
     situation_type = models.ForeignKey('SituationType', blank=True, null=True)
 
     @staticmethod
-    def new(_name, _st=None, _descr=""):
+    def new(_name, _descr="", _st=None):
         s = Situation()
         s.name = _name
         s.situation_type = _st
