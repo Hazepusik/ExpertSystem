@@ -43,10 +43,45 @@ class SituationType(models.Model):
         self.delete()
         return True
 
+    def getJson(self, raw=False):
+        d = dict()
+        d['name'] = self.name
+        children = SituationType.objects.filter(is_subtype_of=self)
+        leaves = Situation.objects.filter(situation_type=self)
+        if children or leaves:
+            d['children'] = []
+            for child in children:
+                d['children'].append(child.getJson(True))
+            for leaf in leaves:
+                d['children'].append(leaf.getJson(True))
+        else:
+            d['size'] = 1000
+
+        if raw:
+            return d
+        return json.dumps(d, indent=2)
+        #return json.dumps(d, indent=2)
+
+        @staticmethod
+        def writeJsonToFile():
+            st = SituationType.objects.get(name="Main")
+            f = open('media/test.json', 'w')
+            f.write(staticmethod.getJson())
+            f.close()
+
 class Situation(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
     situation_type = models.ForeignKey('SituationType', blank=True, null=True)
+
+    def getJson(self, raw=False):
+        d = dict()
+        d['name'] = self.name
+        d['size'] = 1000
+        if raw:
+            return d
+        return json.dumps(d)
+
 
     @staticmethod
     def new(_name, _descr="", _st=None):
@@ -316,7 +351,13 @@ def test(request):
     st2.addChildSituationType(st1)
     st2.addChildSituation(s)
     stRM = SituationType().new("RM", st1)
-    s.setSituationType(stMain)
+    #s.setSituationType(stMain)
 
-    cont = RequestContext(request, {'data': s.situation_type.name})
+    cont = RequestContext(request, {'data': st2.getJson()})
     return HttpResponse(temp.render(cont))
+
+class JsonCircle():
+    name = ''
+    children = []
+    size = 0
+
