@@ -5,6 +5,7 @@ from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
 import json
+import codecs
 
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
@@ -18,21 +19,25 @@ class SituationType(models.Model):
         st.description = _descr
         st.is_subtype_of = _parent
         st.save()
+        SituationType.writeJsonToFile()
         return st
 
     def changeParent(self, _parent):
         self.is_subtype_of = _parent
         self.save()
+        SituationType.writeJsonToFile()
         return self
 
     def addChildSituation(self, situation):
         situation.situation_type = self
         situation.save()
+        SituationType.writeJsonToFile()
         return self
 
     def addChildSituationType(self, st):
         st.is_subtype_of = self
         st.save()
+        SituationType.writeJsonToFile()
         return self
 
     def remove(self):
@@ -41,6 +46,7 @@ class SituationType(models.Model):
         if (len(SituationType.objects.filter(is_subtype_of=self)) > 0):
             return False
         self.delete()
+        SituationType.writeJsonToFile()
         return True
 
     def getJson(self, raw=False):
@@ -59,15 +65,15 @@ class SituationType(models.Model):
 
         if raw:
             return d
-        return json.dumps(d, indent=2)
+        return json.dumps(d, indent=2, encoding='utf8')
         #return json.dumps(d, indent=2)
 
-        @staticmethod
-        def writeJsonToFile():
-            st = SituationType.objects.get(name="Main")
-            f = open('media/test.json', 'w')
-            f.write(staticmethod.getJson())
-            f.close()
+    @staticmethod
+    def writeJsonToFile():
+        st = SituationType.objects.filter(name="")[0]
+        f = open('media/flare.json', 'w')
+        f.write(st.getJson())
+        f.close()
 
 class Situation(models.Model):
     name = models.CharField(max_length=100)
@@ -90,15 +96,18 @@ class Situation(models.Model):
         s.situation_type = _st
         s.description = _descr
         s.save()
+        SituationType.writeJsonToFile()
         return s
 
     def setSituationType(self, st):
         self.situation_type = st
         self.save()
+        SituationType.writeJsonToFile()
         return self
 
     def addQuestion(self, question):
         question.situation = self
+        SituationType.writeJsonToFile()
         question.save()
 
     def addQuestions(self, questions):
@@ -200,6 +209,7 @@ class Question(models.Model):
         q.name = _name
         q.situation = _sit
         q.save()
+        SituationType.writeJsonToFile()
         return q
 
     def getAllAnswers(self):
@@ -344,7 +354,7 @@ def test(request):
 
     #r1.removeQuestion(q1)
 
-    stMain = SituationType().new("Main")
+    stMain = SituationType().new("")
     st1 = SituationType().new("st1", stMain)
     st2 = SituationType().new("st2", st1)
     st2.changeParent(stMain)
@@ -353,11 +363,7 @@ def test(request):
     stRM = SituationType().new("RM", st1)
     #s.setSituationType(stMain)
 
-    cont = RequestContext(request, {'data': st2.getJson()})
+    SituationType.writeJsonToFile()
+
+    cont = RequestContext(request, {'data': st2.getJson().encode('utf-8')})
     return HttpResponse(temp.render(cont))
-
-class JsonCircle():
-    name = ''
-    children = []
-    size = 0
-
