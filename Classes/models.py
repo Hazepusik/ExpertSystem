@@ -60,13 +60,11 @@ class SituationType(models.Model):
                 d['children'].append(child.getJson(True))
             for leaf in leaves:
                 d['children'].append(leaf.getJson(True))
-        else:
-            d['size'] = 1000
 
         if raw:
             return d
         return json.dumps(d, indent=2, encoding='utf8')
-        #return json.dumps(d, indent=2)
+
 
     @staticmethod
     def writeJsonToFile():
