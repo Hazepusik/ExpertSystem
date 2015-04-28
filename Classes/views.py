@@ -40,7 +40,7 @@ def next_question(request, id):
     recommendation = situation.getRecommendation(already_answers)
     if recommendation:
         temp = loader.get_template("answer.html")
-        cont = RequestContext(request, {'data': recommendation})
+        cont = RequestContext(request, {'data': recommendation, 'already_answers': already_answers})
         return  HttpResponse(temp.render(cont))
     else:
         already_questions = []
