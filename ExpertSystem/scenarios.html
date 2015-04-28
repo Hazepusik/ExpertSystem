@@ -3,6 +3,7 @@
 {% block main_content %}
 		<h2>Список доступных ситуаций</h2>
 {% for item in scenarios %}
+
 <a href="/questions/{{item.id}}/"><h3>{{item.name}}</h3></a>
 		<p>{{item.description}}</p>
 {% endfor %}

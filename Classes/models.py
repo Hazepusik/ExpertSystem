@@ -73,6 +73,7 @@ class Recommendation(models.Model):
         r.description = _descr
         r.situation = _sit
         r.save()
+        ConditionSet().new(r)
         return r
 
     def getAnswers(self):

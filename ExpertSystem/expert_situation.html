@@ -2,11 +2,15 @@
 
 {% block main_content %}
 
-		<h2>Рекомендации данного сценария:</h2>
+		<h2>Рекомендации данной ситуации:</h2>
 {% for item in recommendations %}
-<a href="/expert/recommendations/{{item.id}}/"><h3>{{item.name}}</h3></a>
-		<p>{{item.description}}</p>
+<a href="/expert/recommendations/{{item.id}}/"><h3>{{item.name}}</h3>{% if item in conflicts %} <font color="red">Имеет конфликты!</font>{% endif %}</a>
+		<p>{{item.description}}</p><br> <a href="/expert/recommendations/{{item.id}}/delete/">delete</a>
 {% endfor %}
+<br>
+{% if conflicted %}
+Прежде чем добавлять новые рекомендации вы должны разрешить конфликты в уже сущетсвующих рекомендациях.
+{% else %}
 Добавить новую рекомендацию:
 <form action="/expert/new_recommendation/" method="post">
     {% csrf_token %}
@@ -14,16 +18,17 @@
 	<input type="hidden" name="situation" value="{{situation}}"><br>
     <textarea name="description" placeholder="описание"></textarea><br>
 <input type="submit" value="создать">
+{% endif %}
 </form>
-		<h2>Вопросы данного сценария:</h2>
+		<h2>Вопросы данной ситуации:</h2>
 {% for item in questions %}
 <a href="/expert/questions/{{item.id}}/"><h3>{{item.name}}</h3></a> <a href="/expert/questions/{{item.id}}/delete/">delete</a><br>
 {% endfor %}
-Добавить новый вопрос:
-<form action="/expert/new_question/" method="post">
-    {% csrf_token %}
-    <input name="name" type="text" placeholder="название" required><br>
-	<input type="hidden" name="situation" value="{{situation}}"><br>
-    <input type="submit" value="создать">
-</form>
+<!--Добавить новый вопрос:-->
+<!--<form action="/expert/new_question/" method="post">-->
+    <!--{% csrf_token %}-->
+    <!--<input name="name" type="text" placeholder="название" required><br>-->
+	<!--<input type="hidden" name="situation" value="{{situation}}"><br>-->
+    <!--<input type="submit" value="создать">-->
+<!--</form>-->
 {% endblock %}

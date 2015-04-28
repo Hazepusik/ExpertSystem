@@ -14,6 +14,7 @@
     {% endfor %}
 </select><hr>
 {% endfor %}
+<div id="add_q" {% if conflict %}{% else %}style="display:none;"{% endif %}>
 Добавить новый вопрос:
 <form action="/expert/new_question/" method="post">
     {% csrf_token %}
@@ -21,6 +22,7 @@
 	<input type="hidden" name="situation" value="{{situation}}"><br>
     <input type="submit" value="создать">
 </form>
+</div>
 
-
+<center><a href="/expert/situations/{{situation}}/">Вернуться к редактированию ситуации</a></center>
 {% endblock %}

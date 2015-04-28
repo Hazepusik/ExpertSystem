@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Classes',
     'dajaxice',
-    'django_extensions',
+    #'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
