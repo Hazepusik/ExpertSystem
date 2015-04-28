@@ -5,12 +5,14 @@ from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
 import json
-import codecs
+
+root = "root"
 
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
     is_subtype_of = models.ForeignKey('SituationType', blank=True, null=True)
+
 
     @staticmethod
     def new(_name, _parent=None, _descr=""):
@@ -68,7 +70,7 @@ class SituationType(models.Model):
 
     @staticmethod
     def writeJsonToFile():
-        st = SituationType.objects.filter(name="")[0]
+        st = SituationType.objects.filter(name=root)[0]
         f = open('media/flare.json', 'w')
         f.write(st.getJson())
         f.close()
@@ -327,6 +329,7 @@ class ConditionSet(models.Model):
 
 def test(request):
     temp = loader.get_template("test.html")
+    stMain = SituationType().new(root)
     s = Situation.new('Бухгалтерские системы', 'Помощь в выборе бухгалтерской системы')
     r1 = Recommendation.new('1С-бухгалтерия', s)
     r2 = Recommendation.new('SAP ERP', s)
@@ -354,14 +357,19 @@ def test(request):
 
     #r1.removeQuestion(q1)
 
-    stMain = SituationType().new("")
+
     st1 = SituationType().new("st1", stMain)
     st2 = SituationType().new("st2", st1)
     st2.changeParent(stMain)
-    st2.addChildSituationType(st1)
+
     st2.addChildSituation(s)
-    stRM = SituationType().new("RM", st1)
-    #s.setSituationType(stMain)
+    s = Situation.new('БухХалтерские системы', 'Помощь в выборе бухла')
+    st2.addChildSituation(s)
+    s = Situation.new('херота в s1', 'QQQ')
+    st1.addChildSituation(s)
+    s = Situation.new('еще херота в s1', 'WWW')
+    st1.addChildSituation(s)
+
 
     SituationType.writeJsonToFile()
 
