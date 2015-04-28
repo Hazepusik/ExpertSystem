@@ -83,7 +83,8 @@ class Situation(models.Model):
     def getJson(self, raw=False):
         d = dict()
         d['name'] = self.name
-        d['size'] = 1000
+        d['size'] = 10
+        d['link'] = str(self.id)
         if raw:
             return d
         return json.dumps(d)
