@@ -145,6 +145,18 @@ class Situation(models.Model):
                     return rec
         return None
 
+    def getFuzzyRecommendation(self, people, debet):
+        import fuzzy.storage.fcl.Reader
+        system = fuzzy.storage.fcl.Reader.Reader().load_from_file("media/sys.fcl")
+        my_input = {u"people": people, u"debet": debet}
+        my_output = {u"sys": 0.0}
+        system.calculate(my_input, my_output)
+        sysAns = {1.0: "SAP ERP", 2.0: "Галактика", 3.0: "1С-бухгалтерия"}
+        r = Recommendation.objects.filter(name=sysAns[my_output["sys"]])[0]
+        #print r.name
+        return r
+
+
     def hasConflict(self, answerIds):
         conflictWith = []
         answerIds = set(answerIds)
@@ -384,6 +396,6 @@ def test(request):
 
 
     SituationType.writeJsonToFile()
-
+    s.getFuzzyRecommendation(10.1, 10.2)
     cont = RequestContext(request, {'data': st2.getJson().encode('utf-8')})
     return HttpResponse(temp.render(cont))
