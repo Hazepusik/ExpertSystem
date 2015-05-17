@@ -153,7 +153,6 @@ class Situation(models.Model):
         system.calculate(my_input, my_output)
         sysAns = {1.0: "SAP ERP", 2.0: "Галактика", 3.0: "1С-бухгалтерия"}
         r = Recommendation.objects.filter(name=sysAns[my_output["sys"]])[0]
-        #print r.name
         return r
 
 
