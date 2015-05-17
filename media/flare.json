@@ -1,0 +1,50 @@
+{
+  "name": "root", 
+  "children": [
+    {
+      "name": "st1", 
+      "children": [
+        {
+          "name": "KJURTA_KOBEINAAAA", 
+          "children": [
+            {
+              "link": "6", 
+              "name": "asaasaa", 
+              "size": 10
+            }
+          ]
+        }, 
+        {
+          "name": "gwesdg", 
+          "children": [
+            {
+              "link": "7", 
+              "name": "aafsfsa", 
+              "size": 10
+            }
+          ]
+        }, 
+        {
+          "link": "4", 
+          "name": "\u0445\u0435\u0440\u043e\u0442\u0430 \u0432 s1", 
+          "size": 10
+        }
+      ]
+    }, 
+    {
+      "name": "st2", 
+      "children": [
+        {
+          "link": "1", 
+          "name": "\u0411\u0443\u0445\u0433\u0430\u043b\u0442\u0435\u0440\u0441\u043a\u0438\u0435 \u0441\u0438\u0441\u0442\u0435\u043c\u044b", 
+          "size": 10
+        }, 
+        {
+          "link": "3", 
+          "name": "\u0411\u0443\u0445\u0425\u0430\u043b\u0442\u0435\u0440\u0441\u043a\u0438\u0435 \u0441\u0438\u0441\u0442\u0435\u043c\u044b", 
+          "size": 10
+        }
+      ]
+    }
+  ]
+}

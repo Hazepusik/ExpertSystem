@@ -1,4 +1,4 @@
-from Classes.models import Situation, Question, Answer, Recommendation, SituationType
+from Classes.models import Situation, Question, Answer, Recommendation
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -84,7 +84,7 @@ def expert_auth(request):
 
 def expert_situations(request):
     if request.user.is_authenticated():
-        c = {'scenarios': Situation.objects.all(), 'sit_list': SituationType.objects.all()}
+        c = {'scenarios': Situation.objects.all()}
         c.update(csrf(request))
         return  render_to_response("expert_scenarios.html", c)
     else:
@@ -96,13 +96,8 @@ def add_situation(request):
             description = request.POST['description']
         else:
             description = ''
-        parent = SituationType.objects.get(id=int(request.POST['parent_st']))
-        if 'st' in request.POST.keys() and request.POST['st']:
-            new_st = SituationType.new(request.POST['name'], parent, description)
-            return redirect('/expert/situations/')
-        else:
-            new_st = Situation.new(request.POST['name'], description, parent)
-            return redirect('/expert/situations/'+str(new_st.id)+'/')
+        new_situation = Situation.new(request.POST['name'], description)
+        return redirect('/expert/situations/'+str(new_situation.id)+'/')
     else:
         return redirect('/expert/')
 

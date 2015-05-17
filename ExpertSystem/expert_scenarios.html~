@@ -10,12 +10,6 @@
 <form action="/expert/new_scenario/" method="post">
     {% csrf_token %}
     <input name="name" type="text" placeholder="название" required><br>
-    <label><input name="st" type="checkbox"/> Тип ситуаций</label><br>
-    <select name="parent_st">
-    {% for sit in sit_list %}
-    <option value="{{sit.id}}">{{sit.name}}</option>
-    {% endfor %}
-    </select></br>
     <textarea name="description" placeholder="описание"></textarea><br>
     <input type="submit" value="создать">
 </form>
