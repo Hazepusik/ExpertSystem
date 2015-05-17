@@ -20,7 +20,13 @@ Released for free under a Creative Commons Attribution 2.5 License
 }
 function dumb_callback(){}
 function answer_callback(data){
-$('#conflict').html(data.message);
+document.getElementById("conflict").innerHTML = data.message;
+if (data.conflicted){
+document.getElementById("add_q").style.display = '';
+}
+else{
+document.getElementById("add_q").style.display = 'none';
+}
 }
 </script>
 </head>
@@ -32,7 +38,7 @@ $('#conflict').html(data.message);
 <div id="menu">
 	{% block menu %}
 	<ul>
-		<li><a href="/scenarios/" accesskey="1" title="">Выбрать пользовательский сценарий</a></li>
+		<li><a href="/" accesskey="1" title="">Выбрать пользовательскую ситуацию</a></li>
 		<li><a href="/expert/" accesskey="2" title="">Вход для экспертов</a></li>
 	</ul>
 	{% endblock %}

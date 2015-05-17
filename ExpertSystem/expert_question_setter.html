@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+		<h2>{{question.name}}</h2>
+
+
+
+<table>
+    {%  for recommendation in recommendations %}
+    <tr>
+        <td>{{recommendation.name}}</td>
+        <td>
+            <select name="{{recommendation.id}}" onchange="Dajaxice.Classes.redact_condition(dumb_callback, {'recommendation_id':'{{recommendation.id}}', 'answer_id': this.value, 'question_id': '{{question.id}}'});">
+                <option value="-1">---</option>
+                {% for option in question.answer_set.all %}
+                <option value="{{option.id}}" {% if option in recommendation.getAnswers %}selected{% endif %}>{{option.name}}</option>
+                {% endfor %}
+            </select>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<center><a href="/expert/situations/{{question.situation.id}}/">Вернуться к разработке ситуации</a></center>
+
+{% endblock %}

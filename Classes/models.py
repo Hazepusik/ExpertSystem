@@ -7,6 +7,8 @@ from django.template import RequestContext
 import json
 import codecs
 
+root = "root"
+
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
@@ -71,10 +73,10 @@ class SituationType(models.Model):
     @staticmethod
     def writeJsonToFile():
         try:
-            st = SituationType.objects.filter(name="")[0]
+            st = SituationType.objects.filter(name=root)[0]
         except:
-            SituationType().new("")
-        st = SituationType.objects.filter(name="")[0]
+            SituationType().new(root)
+        st = SituationType.objects.filter(name=root)[0]
         f = open('media/flare.json', 'w')
         f.write(st.getJson())
         f.close()
@@ -87,7 +89,8 @@ class Situation(models.Model):
     def getJson(self, raw=False):
         d = dict()
         d['name'] = self.name
-        d['size'] = 1000
+        d['size'] = 10
+        d['link'] = str(self.id)
         if raw:
             return d
         return json.dumps(d)
@@ -165,6 +168,7 @@ class Recommendation(models.Model):
         r.description = _descr
         r.situation = _sit
         r.save()
+        ConditionSet().new(r)
         return r
 
     def getAnswers(self):
@@ -204,6 +208,7 @@ class Recommendation(models.Model):
             conditionSets = ConditionSet.objects.filter(recommendation=self)
         for cs in conditionSets:
             newCnd = Condition().new(answer, cs)
+
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
@@ -333,6 +338,7 @@ class ConditionSet(models.Model):
 
 def test(request):
     temp = loader.get_template("test.html")
+    stMain = SituationType().new(root)
     s = Situation.new('Бухгалтерские системы', 'Помощь в выборе бухгалтерской системы')
     r1 = Recommendation.new('1С-бухгалтерия', s)
     r2 = Recommendation.new('SAP ERP', s)
@@ -366,8 +372,13 @@ def test(request):
     st2.changeParent(stMain)
     st2.addChildSituationType(st1)
     st2.addChildSituation(s)
-    stRM = SituationType().new("RM", st1)
-    #s.setSituationType(stMain)
+    s = Situation.new('БухХалтерские системы', 'Помощь в выборе бухла')
+    st2.addChildSituation(s)
+    s = Situation.new('херота в s1', 'QQQ')
+    st1.addChildSituation(s)
+    s = Situation.new('еще херота в s1', 'WWW')
+    st1.addChildSituation(s)
+
 
     SituationType.writeJsonToFile()
 

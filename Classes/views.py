@@ -40,7 +40,7 @@ def next_question(request, id):
     recommendation = situation.getRecommendation(already_answers)
     if recommendation:
         temp = loader.get_template("answer.html")
-        cont = RequestContext(request, {'data': recommendation})
+        cont = RequestContext(request, {'data': recommendation, 'already_answers': already_answers})
         return  HttpResponse(temp.render(cont))
     else:
         already_questions = []
@@ -106,7 +106,11 @@ def redact_situation(request, id):
         current_situation = Situation.objects.get(id=id)
         recommendations = current_situation.getAllRecommendations()
         questions = current_situation.getAllQuestions()
-        c = {'recommendations': recommendations, 'questions': questions, 'situation': id}
+        conflicts = []
+        for recommendation in recommendations:
+            if recommendation.hasConflict():
+                conflicts.append(recommendation)
+        c = {'recommendations': recommendations, 'questions': questions, 'situation': id, 'conflicts': conflicts, 'conflicted': bool(conflicts)}
         c.update(csrf(request))
         return render_to_response("expert_situation.html", c)
     else:
@@ -137,6 +141,14 @@ def delete_question(request, id):
         current_situation = current_question.situation
         current_question.delete()
         return redirect('/expert/situations/'+str(current_situation.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def delete_situation(request, id):
+    if request.user.is_authenticated():
+        current_situation = Situation.objects.get(id=int(id))
+        current_situation.delete()
+        return redirect('/expert/situations/')
     else:
         return redirect('/expert/')
 
@@ -183,8 +195,30 @@ def redact_recommendation(request, id):
              'conflicts': current_conflicts,
              'answers': answers,
              'situation': current_situation.id,
-             'conflict_block': conflict_block}
+             'conflict_block': conflict_block,
+             'conflict': bool(conflict_block)}
         c.update(csrf(request))
         return render_to_response("expert_recommendation.html", c)
+    else:
+        return redirect('/expert/')
+
+def del_recommendation(request, id):
+    if request.user.is_authenticated():
+        current_question = Recommendation.objects.get(id=int(id))
+        current_situation = current_question.situation
+        current_question.delete()
+        return redirect('/expert/situations/'+str(current_situation.id)+'/')
+    else:
+        return redirect('/expert/')
+
+def question_setter(request, id):
+    if request.user.is_authenticated():
+        current_question = Question.objects.get(id=int(id))
+        current_situation = current_question.situation
+        current_recommendations = current_situation.getAllRecommendations()
+        c = {'recommendations': current_recommendations,
+             'question': current_question}
+        c.update(csrf(request))
+        return render_to_response("expert_question_setter.html", c)
     else:
         return redirect('/expert/')
