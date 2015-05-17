@@ -21,17 +21,22 @@ def redact_answer(request, id, value):
 
 @dajaxice_register
 def redact_condition(request, recommendation_id, answer_id, question_id):
+    print 'redact_condition'
     if request.user.is_authenticated():
         current_recommendation = Recommendation.objects.get(id=int(recommendation_id))
         if answer_id == '-1':
             current_recommendation.delAnswer(Question.objects.get(id=int(question_id)))
         else:
             current_recommendation.addAnswer(Answer.objects.get(id=int(answer_id)))
+
         current_conflicts = current_recommendation.hasConflict()
+        print 'add', current_conflicts
         if current_conflicts:
             conflict_block = loader.render_to_string('conflict_block.html', {'conflicts': current_conflicts})
         else:
-            conflict_block=''
+            conflict_block = ''
+
+        print 'redact_condition_out', current_recommendation.getAnswers()
         return json.dumps({'message':conflict_block})
     else:
         return json.dumps({})

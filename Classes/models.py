@@ -70,6 +70,10 @@ class SituationType(models.Model):
 
     @staticmethod
     def writeJsonToFile():
+        try:
+            st = SituationType.objects.filter(name="")[0]
+        except:
+            SituationType().new("")
         st = SituationType.objects.filter(name="")[0]
         f = open('media/flare.json', 'w')
         f.write(st.getJson())
@@ -194,10 +198,12 @@ class Recommendation(models.Model):
 
     def addAnswer(self, answer):
         self.removeQuestion(answer.question)
-        conditionSets = ConditionSet.objects.filter(recommendation = self)
+        conditionSets = ConditionSet.objects.filter(recommendation=self)
+        if not conditionSets:
+            ConditionSet().new(self)
+            conditionSets = ConditionSet.objects.filter(recommendation=self)
         for cs in conditionSets:
             newCnd = Condition().new(answer, cs)
-
 
 class Question(models.Model):
     name = models.CharField(max_length=500)
