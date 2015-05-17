@@ -63,7 +63,7 @@ class SituationType(models.Model):
             for leaf in leaves:
                 d['children'].append(leaf.getJson(True))
         else:
-            d['size'] = 1000
+            d['size'] = 10
 
         if raw:
             return d
@@ -86,10 +86,13 @@ class Situation(models.Model):
     description = models.CharField(max_length=500, default="")
     situation_type = models.ForeignKey('SituationType', blank=True, null=True)
 
+    def getSum(self):
+        return len(self.getAllRecommendations()) + len(self.getAllQuestions())# + len(self.getAllRecommendations())
+
     def getJson(self, raw=False):
         d = dict()
         d['name'] = self.name
-        d['size'] = 10
+        d['size'] = 10 + self.getSum()
         d['link'] = str(self.id)
         if raw:
             return d
