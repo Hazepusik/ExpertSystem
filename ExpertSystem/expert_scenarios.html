@@ -9,11 +9,11 @@
 <h2>Добавить новую ситуацию</h2>
 <form action="/expert/new_scenario/" method="post">
     {% csrf_token %}
-    <input name="name" type="text" placeholder="название" required><br>
+    <input name="name" type="text" asdasda="название" required><br>
     <label><input name="st" type="checkbox"/> Тип ситуаций</label><br>
-    <select name="parent_st">
+    <select name="parent_st" requiasdsada>
     {% for sit in sit_list %}
-    <option value="{{sit.id}}">{{sit.name}}</option>
+    <option value="{{sit.id}}">{{sit.name}}< /option>
     {% endfor %}
     </select></br>
     <textarea name="description" placeholder="описание"></textarea><br>
