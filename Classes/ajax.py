@@ -21,7 +21,6 @@ def redact_answer(request, id, value):
 
 @dajaxice_register
 def redact_condition(request, recommendation_id, answer_id, question_id):
-    print recommendation_id, answer_id, question_id
     if request.user.is_authenticated():
         current_recommendation = Recommendation.objects.get(id=int(recommendation_id))
         if answer_id == '-1':

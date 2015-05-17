@@ -5,6 +5,7 @@ from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
 import json
+import codecs
 
 root = "root"
 
@@ -12,7 +13,6 @@ class SituationType(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, default="")
     is_subtype_of = models.ForeignKey('SituationType', blank=True, null=True)
-
 
     @staticmethod
     def new(_name, _parent=None, _descr=""):
@@ -62,14 +62,20 @@ class SituationType(models.Model):
                 d['children'].append(child.getJson(True))
             for leaf in leaves:
                 d['children'].append(leaf.getJson(True))
+        else:
+            d['size'] = 1000
 
         if raw:
             return d
         return json.dumps(d, indent=2, encoding='utf8')
-
+        #return json.dumps(d, indent=2)
 
     @staticmethod
     def writeJsonToFile():
+        try:
+            st = SituationType.objects.filter(name=root)[0]
+        except:
+            SituationType().new(root)
         st = SituationType.objects.filter(name=root)[0]
         f = open('media/flare.json', 'w')
         f.write(st.getJson())
@@ -196,7 +202,10 @@ class Recommendation(models.Model):
 
     def addAnswer(self, answer):
         self.removeQuestion(answer.question)
-        conditionSets = ConditionSet.objects.filter(recommendation = self)
+        conditionSets = ConditionSet.objects.filter(recommendation=self)
+        if not conditionSets:
+            ConditionSet().new(self)
+            conditionSets = ConditionSet.objects.filter(recommendation=self)
         for cs in conditionSets:
             newCnd = Condition().new(answer, cs)
 
@@ -357,11 +366,11 @@ def test(request):
 
     #r1.removeQuestion(q1)
 
-
+    stMain = SituationType().new("")
     st1 = SituationType().new("st1", stMain)
     st2 = SituationType().new("st2", st1)
     st2.changeParent(stMain)
-
+    st2.addChildSituationType(st1)
     st2.addChildSituation(s)
     s = Situation.new('БухХалтерские системы', 'Помощь в выборе бухла')
     st2.addChildSituation(s)
