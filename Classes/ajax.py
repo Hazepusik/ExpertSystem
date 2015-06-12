@@ -2,7 +2,7 @@ __author__ = 'mart'
 
 import json
 from dajaxice.decorators import dajaxice_register
-from Classes.models import Answer, Recommendation, Question
+from Classes.models import Answer, Recommendation, Question, Situation, SituationType
 from django.template import loader
 @dajaxice_register
 def sayhello(request):
@@ -35,4 +35,15 @@ def redact_condition(request, recommendation_id, answer_id, question_id):
         return json.dumps({'message':conflict_block, 'conflicted':bool(conflict_block)})
     else:
         return json.dumps({})
+
+
+@dajaxice_register
+def redact_sitype(request, situation, type):
+    if request.user.is_authenticated():
+        current_situation = Situations.objects.get(id=int(situation))
+        current_situation.setSituationType(SituationType.objects.get(id=int(type)))
+        return json.dumps({})
+    else:
+        return json.dumps({})
+
 

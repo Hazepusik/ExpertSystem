@@ -5,9 +5,14 @@ from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
 import json
+from django import forms
 import codecs
 
 root = "root"
+
+class Storage(models.Model):
+    file = models.ImageField(upload_to='media/images', default='media/images/no-img.jpg')
+    situation = models.ForeignKey('Situation')
 
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
@@ -88,6 +93,12 @@ class Situation(models.Model):
 
     def getSum(self):
         return len(self.getAllRecommendations()) + len(self.getAllQuestions())# + len(self.getAllRecommendations())
+
+    def getCircleSize(self):
+        return 10
+
+    def getAllFiles(self):
+        return 10
 
     def getJson(self, raw=False):
         d = dict()
@@ -289,6 +300,10 @@ class ConditionSet(models.Model):
     def getAllConditions(self):
         return Condition.objects.filter(conditionSet = self)
 
+
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()
 
 # def test(request):
 #     temp = loader.get_template("test.html")

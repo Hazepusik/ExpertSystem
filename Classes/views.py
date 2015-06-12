@@ -115,7 +115,7 @@ def redact_situation(request, id):
         for recommendation in recommendations:
             if recommendation.hasConflict():
                 conflicts.append(recommendation)
-        c = {'recommendations': recommendations, 'questions': questions, 'situation': id, 'conflicts': conflicts, 'conflicted': bool(conflicts)}
+        c = {'recommendations': recommendations, 'questions': questions, 'situation': id, 'conflicts': conflicts, 'conflicted': bool(conflicts), 'sit_list': SituationType.objects.all(), 'cursit': current_situation}
         c.update(csrf(request))
         return render_to_response("expert_situation.html", c)
     else:
@@ -225,5 +225,14 @@ def question_setter(request, id):
              'question': current_question}
         c.update(csrf(request))
         return render_to_response("expert_question_setter.html", c)
+    else:
+        return redirect('/expert/')
+
+
+def delete_situationtype(request, id):
+    if request.user.is_authenticated():
+        current_situationtype = SituationType.objects.get(id=int(id))
+        current_situationtype.delete()
+        return redirect('/expert/situations/')
     else:
         return redirect('/expert/')

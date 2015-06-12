@@ -6,14 +6,19 @@
 <a href="/expert/situations/{{item.id}}/"><h3>{{item.name}}</h3></a>
 		<p>{{item.description}}</p><br><a href="/expert/situations/{{item.id}}/delete/"><h3>delete</h3></a><hr>
 {% endfor %}
+<h2>Типы ситуаций доступные для редактирования</h2>
+{% for item in sit_list %}
+<a href="/expert/situations/{{item.id}}/"><h3>{{item.name}}</h3></a>
+		<p>{{item.description}}</p><br><a href="/expert/situationtype/{{item.id}}/delete/"><h3>delete</h3></a><hr>
+{% endfor %}
 <h2>Добавить новую ситуацию</h2>
 <form action="/expert/new_scenario/" method="post">
     {% csrf_token %}
     <input name="name" type="text" asdasda="название" required><br>
     <label><input name="st" type="checkbox"/> Тип ситуаций</label><br>
-    <select name="parent_st" requiasdsada>
+    <select name="parent_st" required>
     {% for sit in sit_list %}
-    <option value="{{sit.id}}">{{sit.name}}< /option>
+    <option value="{{sit.id}}">{{sit.name}}</option>
     {% endfor %}
     </select></br>
     <textarea name="description" placeholder="описание"></textarea><br>
