@@ -2,7 +2,7 @@
 
 {% block main_content %}
     Размер кругов:
-    <select name="filter_type" required onchange="Dajaxice.Classes.redact_circles(dumb_callback, {'type': this.value}); window.location.reload();">
+    <select name="filter_type" required onchange="Dajaxice.Classes.redact_circles(setTimeout(function() { window.location.reload(); }, 2000), {'type': this.value}); ">
         <option value="0" {% if item == 0 %} selected {% endif %} >по неполноте</option>
         <option value="1" {% if item == 1 %} selected {% endif %} >по противоречивости</option>
         <option value="2" {% if item == 2 %} selected {% endif %} >по количеству моделей</option>

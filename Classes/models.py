@@ -73,7 +73,7 @@ class SituationType(models.Model):
             for leaf in leaves:
                 d['children'].append(leaf.getJson(True, circle_type))
         else:
-            d['size'] = 10
+            d['size'] = 5
 
         if raw:
             return d
