@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
-		<h2>Ответте на следующие вопросы:</h2>
+		<h2>Ответьте на следующие вопросы:</h2>
         <form action="/solution/" method="post">
             {% csrf_token %}
-            <input type="hidden" name ="sit" value="{{scenario}}">
+            <input type="hidden" name="sit" value="{{scenario}}">
 {% for item in questions %}
 		<p>{{item.quest.name}}</p>
         <select name="q{{item.quest.id}}">

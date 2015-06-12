@@ -9,10 +9,15 @@ from django import forms
 import codecs
 
 root = "root"
+circleType = 0
 
 class Storage(models.Model):
     file = models.ImageField(upload_to='media/images', default='media/images/no-img.jpg')
     situation = models.ForeignKey('Situation')
+
+    @staticmethod
+    def getCT():
+        return circleType
 
 class SituationType(models.Model):
     name = models.CharField(max_length=100)
@@ -56,7 +61,7 @@ class SituationType(models.Model):
         SituationType.writeJsonToFile()
         return True
 
-    def getJson(self, raw=False):
+    def getJson(self, raw=False, circle_type=0):
         d = dict()
         d['name'] = self.name
         children = SituationType.objects.filter(is_subtype_of=self)
@@ -64,9 +69,9 @@ class SituationType(models.Model):
         if children or leaves:
             d['children'] = []
             for child in children:
-                d['children'].append(child.getJson(True))
+                d['children'].append(child.getJson(True, circle_type))
             for leaf in leaves:
-                d['children'].append(leaf.getJson(True))
+                d['children'].append(leaf.getJson(True, circle_type))
         else:
             d['size'] = 10
 
@@ -76,14 +81,16 @@ class SituationType(models.Model):
         #return json.dumps(d, indent=2)
 
     @staticmethod
-    def writeJsonToFile():
+    def writeJsonToFile(circle_type=0):
+        global circleType
+        circleType = circle_type
         try:
             st = SituationType.objects.filter(name=root)[0]
         except:
             SituationType().new(root)
         st = SituationType.objects.filter(name=root)[0]
         f = open('media/flare.json', 'w')
-        f.write(st.getJson())
+        f.write(st.getJson(False, circle_type))
         f.close()
 
 class Situation(models.Model):
@@ -94,16 +101,28 @@ class Situation(models.Model):
     def getSum(self):
         return len(self.getAllRecommendations()) + len(self.getAllQuestions())# + len(self.getAllRecommendations())
 
-    def getCircleSize(self):
-        return 10
+    def getCircleSize(self, circle_type):
+        if circle_type == 0:  # по неполноте
+            max_cnd = 1
+            for q in self.getAllQuestions():
+                max_cnd *= len(q.getAllAnswers())
+            return max_cnd - len(self.getAllRecommendations())
+        if circle_type == 1:  # по противоречивости
+            cond_cnt = 0
+            for r in self.getAllRecommendations():
+                for cs in ConditionSet.objects.filter(recommendation=r):
+                    cond_cnt += len(Condition.objects.filter(conditionSet=cs))
+            return cond_cnt - len(self.getAllRecommendations())
+        if circle_type == 2:  # по количеству моделей
+            return len(self.getAllFiles())
 
     def getAllFiles(self):
-        return 10
+        return []
 
-    def getJson(self, raw=False):
+    def getJson(self, raw=False, circle_type=0):
         d = dict()
         d['name'] = self.name
-        d['size'] = 10 + self.getSum()
+        d['size'] = 5 + self.getCircleSize(circle_type)
         d['link'] = str(self.id)
         if raw:
             return d

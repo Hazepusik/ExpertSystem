@@ -1,4 +1,4 @@
-from Classes.models import Situation, Question, Answer, Recommendation, SituationType
+from Classes.models import Situation, Question, Answer, Recommendation, SituationType, Storage
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -15,8 +15,9 @@ def main(request):
 
 def situations(request):
     temp = loader.get_template("scenarios.html")
-    cont = RequestContext(request, {'scenarios': Situation.objects.all()})
-    return  HttpResponse(temp.render(cont))
+    cont = RequestContext(request, {'scenarios': Situation.objects.all(), 'item': Storage.getCT()})
+    print 'ct,', Storage.getCT()
+    return HttpResponse(temp.render(cont))
 
 def questions(request, id):
     situation = Situation.objects.get(id=int(id)).getAllQuestions()

@@ -2,13 +2,22 @@
   "name": "root", 
   "children": [
     {
-      "link": "5", 
       "name": "test", 
-      "size": 13
+      "children": [
+        {
+          "link": "13", 
+          "name": "111", 
+          "size": 6
+        }, 
+        {
+          "link": "14", 
+          "name": "222", 
+          "size": 5
+        }
+      ]
     }, 
     {
-      "link": "6", 
-      "name": "asfasfasfas", 
+      "name": "test222", 
       "size": 10
     }
   ]

@@ -47,3 +47,10 @@ def redact_sitype(request, situation, type):
         return json.dumps({})
 
 
+@dajaxice_register
+def redact_circles(request, type):
+    print type, 'qqq'
+    SituationType.writeJsonToFile(int(type))
+    return json.dumps({})
+
+
