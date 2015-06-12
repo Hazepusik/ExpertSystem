@@ -15,6 +15,6 @@
         </form>
         {% if files %}<h2>Модели</h2>{% endif %}
         {% for item in files %}
-            <br /><img src="/media/{{item.file}}" width="300" height="240">
+            <br /><a href="/media/{{item.file}}"><img src="/media/{{item.file}}" width="300" height="240"></a>
         {% endfor %}
 {% endblock %}

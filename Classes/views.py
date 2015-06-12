@@ -40,6 +40,9 @@ def next_question(request, id):
         already_answers.append(int(request.POST['question']))
     recommendation = situation.getRecommendation(already_answers)
     if recommendation:
+        sit_to_redirect = Situation.objects.filter(name=recommendation.name)
+        if sit_to_redirect:
+            return redirect('/questions/'+str(sit_to_redirect[0].id)+'/')
         temp = loader.get_template("answer.html")
         cont = RequestContext(request, {'data': recommendation, 'already_answers': already_answers})
         return HttpResponse(temp.render(cont))

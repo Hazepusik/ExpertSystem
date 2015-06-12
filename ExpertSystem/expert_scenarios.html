@@ -18,7 +18,7 @@
     <label><input name="st" type="checkbox"/> Тип ситуаций</label><br>
     <select name="parent_st" required>
     {% for sit in sit_list %}
-        <option value="{{sit.id}}">{{sit.name}} ({{sit.is_subtype_of.name}})</option>
+        <option value="{{sit.id}}">{{sit.name}} ({{sit.is_subtype_of.name}}) ({{sit.is_subtype_of.is_subtype_of.name}})</option>
     {% endfor %}
     </select></br>
     <textarea name="description" placeholder="описание"></textarea><br>
