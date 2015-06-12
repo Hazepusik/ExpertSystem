@@ -6,6 +6,18 @@
             <option value="{{item.id}}" {% if item == cursit.situation_type %} selected {% endif%} >{{item.name}}</option>
         {% endfor %}
 </select>
+        <h2>Прикрепленные изображения </h2>
+        {% for item in files %}
+            <br />{{item.name}}&nbsp;<a href="/expert/delete_img/{{item.id}}/"><h3>Удалить</h3></a>
+        {% endfor %}
+            <form action="/expert/upload_img/{{situation}}/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>
+                    <input id="id_image" type="file" class="" name="image">
+                </p>
+                <input type="hidden" name="situation" value="{{situation}}"><br>
+                <input type="submit" value="Добавить изображение" />
+            </form>
 		<h2>Рекомендации данной ситуации:</h2>
 {% for item in recommendations %}
 <a href="/expert/recommendations/{{item.id}}/"><h3>{{item.name}}</h3>{% if item in conflicts %} <font color="red">Имеет конфликты!</font>{% endif %}</a>

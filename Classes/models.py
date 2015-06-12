@@ -117,7 +117,10 @@ class Situation(models.Model):
             return len(self.getAllFiles())
 
     def getAllFiles(self):
-        return []
+        files = Storage.objects.filter(situation=self)
+        for file in files:
+            file.name = file.file.name.split('/')[-1].split('.')[0]
+        return files
 
     def getJson(self, raw=False, circle_type=0):
         d = dict()

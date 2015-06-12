@@ -1,4 +1,4 @@
-from Classes.models import Situation, Question, Answer, Recommendation, SituationType, Storage
+from Classes.models import Situation, Question, Answer, Recommendation, SituationType, Storage, ImageUploadForm
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -42,7 +42,7 @@ def next_question(request, id):
     if recommendation:
         temp = loader.get_template("answer.html")
         cont = RequestContext(request, {'data': recommendation, 'already_answers': already_answers})
-        return  HttpResponse(temp.render(cont))
+        return HttpResponse(temp.render(cont))
     else:
         already_questions = []
         for element in already_answers:
@@ -51,9 +51,11 @@ def next_question(request, id):
         if non_answered:
             current_question = non_answered[0]
             c = {'quest': current_question,
-                 'scenario':id,
+                 'scenario': id,
                  'answers': str(already_answers),
-                 'ans': current_question.getAllAnswers()}
+                 'ans': current_question.getAllAnswers(),
+                 'files': current_question.situation.getAllFiles()
+                }
             c.update(csrf(request))
             return render_to_response('uno_question.html', c)
         else:
@@ -116,7 +118,14 @@ def redact_situation(request, id):
         for recommendation in recommendations:
             if recommendation.hasConflict():
                 conflicts.append(recommendation)
-        c = {'recommendations': recommendations, 'questions': questions, 'situation': id, 'conflicts': conflicts, 'conflicted': bool(conflicts), 'sit_list': SituationType.objects.all(), 'cursit': current_situation}
+        c = {'recommendations': recommendations,
+             'questions': questions,
+             'situation': id,
+             'conflicts': conflicts,
+             'conflicted': bool(conflicts),
+             'sit_list': SituationType.objects.all(),
+             'cursit': current_situation,
+             'files': current_situation.getAllFiles()}
         c.update(csrf(request))
         return render_to_response("expert_situation.html", c)
     else:
@@ -235,5 +244,28 @@ def delete_situationtype(request, id):
         current_situationtype = SituationType.objects.get(id=int(id))
         current_situationtype.delete()
         return redirect('/expert/situations/')
+    else:
+        return redirect('/expert/')
+
+def upload_img(request, id):
+    print id
+    if request.method == 'POST' and request.user.is_authenticated():
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            m = Storage()
+            m.file = form.cleaned_data['image']
+            m.situation = Situation.objects.get(id=int(id))
+            m.save()
+            return redirect('/expert/situations/'+str(id)+'/')
+    return redirect('/expert/')
+
+
+def delete_img(request, id):
+    print id
+    if request.user.is_authenticated():
+        img = Storage.objects.get(id=int(id))
+        sitId = img.situation.id
+        img.delete()
+        return redirect('/expert/situations/'+str(sitId)+'/')
     else:
         return redirect('/expert/')

@@ -34,7 +34,8 @@ urlpatterns = patterns('',
     url(r'^expert/questions/([0-9]+)/$', redact_question),
     url(r'^expert/recommendations/([0-9]+)/delete/$', del_recommendation),
     url(r'^expert/recommendations/([0-9]+)/$', redact_recommendation),
-
+    url(r'^expert/upload_img/([0-9]+)/$', upload_img),
+    url(r'^expert/delete_img/([0-9]+)/$', delete_img),
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 )

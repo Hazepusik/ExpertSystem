@@ -13,4 +13,8 @@
         </select> <br>
         <input type="submit" value="отправить">
         </form>
+        {% if files %}<h2>Модели</h2>{% endif %}
+        {% for item in files %}
+            <br /><img src="/media/{{item.file}}" width="300" height="240">
+        {% endfor %}
 {% endblock %}
